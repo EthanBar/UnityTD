@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour {
+
+    public int Hp;
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,14 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+
 	void Update () {
-		
+        if (Hp < 0) {
+            Destroy(gameObject);
+        }
+	}
+
+	public void Damage(int damage) {
+		Hp -= damage;
 	}
 }

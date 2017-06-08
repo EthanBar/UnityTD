@@ -5,6 +5,9 @@ using UnityEngine;
 public class Shot : MonoBehaviour {
 
     GameObject target;
+    public float speed;
+    public int dmg;
+
 
     // Use this for initialization
     void Start() {
@@ -14,7 +17,7 @@ public class Shot : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (target != null) {
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.1f);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
         } else {
             Destroy(gameObject);
         }
@@ -27,6 +30,9 @@ public class Shot : MonoBehaviour {
 
 	void OnTriggerEnter(Collider hit) {
         print(hit.gameObject);
-        if (hit.gameObject == target) Destroy(hit.gameObject);
+        if (hit.gameObject == target) {
+            hit.gameObject.GetComponent<Enemy>().Damage(dmg);
+            Destroy(gameObject);
+        }
 	}
 }
