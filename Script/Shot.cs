@@ -29,7 +29,6 @@ public class Shot : MonoBehaviour {
 
 
 	void OnTriggerEnter(Collider hit) {
-        print(hit.gameObject);
         if (hit.gameObject == target) {
             hit.gameObject.GetComponent<Enemy>().Damage(dmg);
             Destroy(gameObject);

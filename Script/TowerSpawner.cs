@@ -16,12 +16,10 @@ public class TowerSpawner : MonoBehaviour
 			RaycastHit hitInfo;
 			bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 			if (hit) {
-				if (hitInfo.transform.gameObject.name == "Ground") {
+				if (hitInfo.transform.gameObject.name == "Grid Selector") {
 					GameObject newTower = Instantiate(Tower);
 					newTower.transform.SetParent(gameObject.transform);
-					Vector3 pos = hitInfo.point;
-					pos.y += 0.5f;
-					newTower.transform.position = pos;
+					newTower.transform.position = new Vector3(Mathf.Round(hitInfo.point.x), 0.5f, Mathf.Round(hitInfo.point.z));
 				}
 			}
 		}

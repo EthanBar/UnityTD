@@ -24,7 +24,8 @@ public class Enemy : MonoBehaviour {
 				toShoot = child.gameObject;
 			}
 		}
-		agent.destination = toShoot.transform.position;
+//		agent.velocity += new Vector3(0, 0, 1);
+		if (toShoot != null) agent.destination = toShoot.transform.position;
 		if (Hp < 0) {
             Destroy(gameObject);
         }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
-    public GameObject enemy;
-    bool canSpawn;
-    public float spawnInter;
+    public GameObject Enemy;
+    bool _canSpawn;
+    public float SpawnInter;
 
 	// Use this for initialization
 	void Start () {
-        canSpawn = true;
+        _canSpawn = true;
 	}
 	
 	// Update is called once per frame
@@ -18,27 +18,27 @@ public class Spawner : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) {
 			//Debug.Log("Mouse is down");
 
-            RaycastHit hitInfo = new RaycastHit();
+            RaycastHit hitInfo;
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 			if (hit) {
-                if (hitInfo.transform.gameObject.name == "Ground") {
-                    GameObject newEnemy = Instantiate(enemy);
+                if (hitInfo.transform.gameObject.name == "Grid Selector") {
+                    GameObject newEnemy = Instantiate(Enemy);
                     newEnemy.transform.SetParent(gameObject.transform);
                     Vector3 pos = hitInfo.point;
-                    pos.y += 0.25f;
+                    pos.y = 0.25f;
                     newEnemy.transform.position = pos;
 				}
 			}
 		}
-		if (canSpawn) {
+		if (_canSpawn) {
             StartCoroutine(SpawnEnemy());
             //print("spawn");
         }
 	}
 
 	public IEnumerator SpawnEnemy() {
-		canSpawn = false;
-		yield return new WaitForSeconds(spawnInter); // wait
-		canSpawn = true;
+		_canSpawn = false;
+		yield return new WaitForSeconds(SpawnInter); // wait
+		_canSpawn = true;
 	}
 }
