@@ -1,18 +1,31 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
 
     public int Hp;
 
-	// Use this for initialization
-	void Start () {
-		
+	private NavMeshAgent agent;
+	GameObject towerSpawner;
+
+	void Start() {
+		towerSpawner = GameObject.Find("Tower Spawner");
+		agent = GetComponent<NavMeshAgent>();
 	}
-	
-	// Update is called once per frame
 
 	void Update () {
-        if (Hp < 0) {
+		GameObject toShoot = null;
+		foreach (Transform child in towerSpawner.transform) {
+			if (toShoot == null) {
+				toShoot = child.gameObject;
+			}
+			else if (Vector3.Distance(transform.position, child.position) <
+			         Vector3.Distance(transform.position, toShoot.transform.position)) {
+				toShoot = child.gameObject;
+			}
+		}
+		agent.destination = toShoot.transform.position;
+		if (Hp < 0) {
             Destroy(gameObject);
         }
 	}
