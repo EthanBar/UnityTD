@@ -21,13 +21,13 @@ public class Spawner : MonoBehaviour {
             RaycastHit hitInfo;
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 			if (hit) {
-                if (hitInfo.transform.gameObject.name == "Grid Selector") {
+//                if (hitInfo.transform.gameObject.name == "Grid Selector") {
                     GameObject newEnemy = Instantiate(Enemy);
                     newEnemy.transform.SetParent(gameObject.transform);
                     Vector3 pos = hitInfo.point;
                     pos.y = 0.25f;
                     newEnemy.transform.position = pos;
-				}
+//				}
 			}
 		}
 		if (_canSpawn) {

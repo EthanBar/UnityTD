@@ -19,7 +19,7 @@ public class TowerSpawner : MonoBehaviour
 				if (hitInfo.transform.gameObject.name == "Grid Selector") {
 					GameObject newTower = Instantiate(Tower);
 					newTower.transform.SetParent(gameObject.transform);
-					newTower.transform.position = new Vector3(Mathf.Round(hitInfo.point.x), 0.5f, Mathf.Round(hitInfo.point.z));
+					newTower.transform.position = new Vector3(Mathf.Round(hitInfo.point.x), 0.4f, Mathf.Round(hitInfo.point.z));
 				}
 			}
 		}

@@ -1,31 +1,37 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour {
 
     public int Hp;
-
-	private NavMeshAgent agent;
 	GameObject towerSpawner;
+	private Rigidbody rb;
+	public float maxSpeed;
+	public float acceleration;
 
 	void Start() {
 		towerSpawner = GameObject.Find("Tower Spawner");
-		agent = GetComponent<NavMeshAgent>();
+		rb = GetComponent<Rigidbody>();
 	}
 
-	void Update () {
-		GameObject toShoot = null;
+	void FixedUpdate () {
+		GameObject toAttack = null;
 		foreach (Transform child in towerSpawner.transform) {
-			if (toShoot == null) {
-				toShoot = child.gameObject;
+			if (toAttack == null) {
+				toAttack = child.gameObject;
 			}
 			else if (Vector3.Distance(transform.position, child.position) <
-			         Vector3.Distance(transform.position, toShoot.transform.position)) {
-				toShoot = child.gameObject;
+			         Vector3.Distance(transform.position, toAttack.transform.position)) {
+				toAttack = child.gameObject;
 			}
 		}
+		if (toAttack != null) rb.AddForce((toAttack.transform.position - transform.position).normalized * acceleration, ForceMode.VelocityChange);
 //		agent.velocity += new Vector3(0, 0, 1);
-		if (toShoot != null) agent.destination = toShoot.transform.position;
+		if(rb.velocity.magnitude > maxSpeed) {
+			rb.velocity = rb.velocity.normalized * maxSpeed;
+		}
+	
 		if (Hp < 0) {
             Destroy(gameObject);
         }
