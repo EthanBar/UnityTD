@@ -10,7 +10,8 @@ public class GridSelector : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		RaycastHit hitInfo;
-		Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-		transform.position = new Vector3(Mathf.Round(hitInfo.point.x), 0.01f, Mathf.Round(hitInfo.point.z));
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo)) {
+            transform.position = new Vector3(Mathf.Round(hitInfo.point.x), 0.01f, Mathf.Round(hitInfo.point.z));
+        }
 	}
 }
