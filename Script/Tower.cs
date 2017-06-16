@@ -5,25 +5,26 @@ using UnityEngine;
 public class Tower : MonoBehaviour {
     
     public GameObject shot;
-
-    public float shootTime;
     public float range;
+    public Level[] levels;
 
     GameObject enemySpawner;
     GameObject target;
+    MeshRenderer meshRender;
 
     bool canShoot;
     int MaxHP;
     int HP;
 
-    //[System.Serializable]
-    public Level[] levels;
+    float shotPS;
     int level;
 
     // Use this for initialization
     void Start() {
+        meshRender = GetComponent<MeshRenderer>();
         MaxHP = levels[0].HP;
         HP = MaxHP;
+        shotPS = levels[0].shotPS;
         canShoot = true;
         level = 1;
         enemySpawner = GameObject.Find("Enemy Spawner");
@@ -68,7 +69,7 @@ public class Tower : MonoBehaviour {
 
 	public IEnumerator ShootTick() {
         canShoot = false;
-        yield return new WaitForSeconds(shootTime); // wait
+        yield return new WaitForSeconds(1 / shotPS); // wait
         canShoot = true;
 	}
 
@@ -77,8 +78,10 @@ public class Tower : MonoBehaviour {
             level++;
             if (ScoreManager.points >= levels[level - 1].Cost) {
                 MaxHP = levels[level - 1].HP;
-                shootTime = levels[level - 1].Speed;
+                shotPS = levels[level - 1].shotPS;
                 ScoreManager.points -= levels[level - 1].Cost;
+                meshRender.material.color = levels[level - 1].tint;
+                HP = MaxHP;
             }
         }
     }
@@ -88,7 +91,8 @@ public class Tower : MonoBehaviour {
 public struct Level {
     public int HP;
     public int Cost;
-    public int Speed;
-    public int Range;
-    public int Damage;
+    public int shotPS;
+    public Color tint;
+    //public int Range;
+    //public int Damage;
 }
