@@ -25,8 +25,7 @@ public class TowerSpawner : MonoBehaviour {
 				} else if (hitInfo.transform.gameObject.tag == "Tower") {
                     // Upgrade
                     Tower script = hitInfo.transform.gameObject.GetComponent<Tower>();
-                    script.shootTime -= 0.1f;
-                    print(script.shootTime);
+                    script.Upgrade();
                 }
 			}
 		}

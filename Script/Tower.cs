@@ -5,25 +5,27 @@ using UnityEngine;
 public class Tower : MonoBehaviour {
     
     public GameObject shot;
-    public int MinHP;
-    public int IncHP;
 
     public float shootTime;
     public float range;
-
 
     GameObject enemySpawner;
     GameObject target;
 
     bool canShoot;
-    int InitMinHP;
+    int MaxHP;
     int HP;
+
+    //[System.Serializable]
+    public Level[] levels;
+    int level;
 
     // Use this for initialization
     void Start() {
-        HP = MinHP;
-        InitMinHP = MinHP;
+        MaxHP = levels[0].HP;
+        HP = MaxHP;
         canShoot = true;
+        level = 1;
         enemySpawner = GameObject.Find("Enemy Spawner");
     }
 
@@ -70,7 +72,23 @@ public class Tower : MonoBehaviour {
         canShoot = true;
 	}
 
-    public void UpgradeHP() {
-        MinHP += (int)(InitMinHP * 0.1f);
+    public void Upgrade() {
+        if (levels.Length > level) {
+            level++;
+            if (ScoreManager.points >= levels[level - 1].Cost) {
+                MaxHP = levels[level - 1].HP;
+                shootTime = levels[level - 1].Speed;
+                ScoreManager.points -= levels[level - 1].Cost;
+            }
+        }
     }
+}
+
+[System.Serializable]
+public struct Level {
+    public int HP;
+    public int Cost;
+    public int Speed;
+    public int Range;
+    public int Damage;
 }
