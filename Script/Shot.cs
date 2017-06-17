@@ -6,7 +6,9 @@ public class Shot : MonoBehaviour {
 
     GameObject target;
     public float speed;
-    public int dmg;
+
+
+    int dmg;
 
 
     // Use this for initialization
@@ -23,8 +25,10 @@ public class Shot : MonoBehaviour {
         }
     }
 
-    public void Init(GameObject target) {
+    public void Init(GameObject target, int dmg, Transform parent) {
+        transform.parent = parent;
         this.target = target;
+        this.dmg = dmg;
     }
 
 

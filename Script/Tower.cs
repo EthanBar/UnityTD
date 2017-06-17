@@ -55,11 +55,12 @@ public class Tower : MonoBehaviour {
             StartCoroutine(ShootTick()); // Reset shot counter
             GameObject shotp = Instantiate(shot, transform.position, Quaternion.identity);
             Shot script = shotp.GetComponent<Shot>();
-            script.Init(target);
+            script.Init(target, levels[level - 1].damage, transform);
         }
 
 		if (HP < 0) {
 			Destroy(gameObject);
+            TowerSpawner.grid[(int)transform.position.x + TowerSpawner.width / 2, (int)transform.position.z + TowerSpawner.height / 2] = false;
 		}
     }
 
@@ -75,8 +76,8 @@ public class Tower : MonoBehaviour {
 
     public void Upgrade() {
         if (levels.Length > level) {
-            level++;
-            if (ScoreManager.points >= levels[level - 1].Cost) {
+            if (ScoreManager.points >= levels[level].Cost) {
+                level++;
                 MaxHP = levels[level - 1].HP;
                 shotPS = levels[level - 1].shotPS;
                 ScoreManager.points -= levels[level - 1].Cost;
@@ -90,9 +91,10 @@ public class Tower : MonoBehaviour {
 [System.Serializable]
 public struct Level {
     public int HP;
-    public int Cost;
-    public int shotPS;
+    public int damage;
+    public float shotPS;
     public Color tint;
+    public int Cost;
     //public int Range;
     //public int Damage;
 }

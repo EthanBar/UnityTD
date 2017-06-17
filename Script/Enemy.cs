@@ -16,11 +16,16 @@ public class Enemy : MonoBehaviour {
     GameObject target;
     bool canAtk;
 
+    public float speedMulti;
+    public float dmgMulti;
+
 
 	void Start() {
 		towerSpawner = GameObject.Find("Tower Spawner");
 		rb = GetComponent<Rigidbody>();
         canAtk = true;
+        speedMulti = 1;
+        dmgMulti = 1;
 	}
 
 	void FixedUpdate () {
@@ -39,17 +44,20 @@ public class Enemy : MonoBehaviour {
 				toAttack = child.gameObject;
 			}
 		}
-		if (toAttack != null) rb.AddForce((toAttack.transform.position - transform.position).normalized * acceleration, ForceMode.VelocityChange);
+        if (toAttack != null) rb.AddForce((toAttack.transform.position - transform.position).normalized * acceleration * speedMulti, ForceMode.VelocityChange);
 //		agent.velocity += new Vector3(0, 0, 1);
-		if(rb.velocity.magnitude > maxSpeed) {
-			rb.velocity = rb.velocity.normalized * maxSpeed;
+		if (rb.velocity.magnitude > maxSpeed * speedMulti) {
+            rb.velocity = rb.velocity.normalized * maxSpeed * speedMulti;
 		}
 
         if (target != null && canAtk) {
             StartCoroutine(Attack());
             Tower script = target.gameObject.GetComponent<Tower>();
-            script.Damage(dmg);
+            script.Damage((int)(dmg * dmgMulti));
         }
+
+        speedMulti = 1;
+        dmgMulti = 1;
 	}
 
     IEnumerator Attack() {
