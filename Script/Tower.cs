@@ -41,10 +41,10 @@ public class Tower : MonoBehaviour {
             if (enemySpawner.transform.childCount > 0) {
                 foreach (Transform child in enemySpawner.transform) {
                     if (target == null) {
-                        target = child.gameObject;
+                        target = child.Find("Enemy").gameObject;
                     } else if (Vector3.Distance(transform.position, child.position) <
                                Vector3.Distance(transform.position, target.transform.position)) {
-                        target = child.gameObject;
+                        target = child.Find("Enemy").gameObject;
                     }
                 }
                 if (Vector3.Distance(transform.position, target.transform.position) > range) target = null;
@@ -76,11 +76,11 @@ public class Tower : MonoBehaviour {
 
     public void Upgrade() {
         if (levels.Length > level) {
-            if (ScoreManager.points >= levels[level].Cost) {
+            if (DataMan.coins >= levels[level].Cost) {
                 level++;
                 MaxHP = levels[level - 1].HP;
                 shotPS = levels[level - 1].shotPS;
-                ScoreManager.points -= levels[level - 1].Cost;
+                DataMan.coins -= levels[level - 1].Cost;
                 meshRender.material.color = levels[level - 1].tint;
                 HP = MaxHP;
             }

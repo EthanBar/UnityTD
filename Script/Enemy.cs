@@ -1,26 +1,31 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
 
-    public int Hp;
+    public int MaxHP;
     public int dmg;
     public float atkSpd;
 	GameObject towerSpawner;
 	Rigidbody rb;
 	public float maxSpeed;
     public float acceleration;
-    public int pnts;
+    public int coins;
 
     GameObject target;
     bool canAtk;
+    int Hp;
 
     public float speedMulti;
     public float dmgMulti;
+    public int healthAdd;
 
+    [Header("Unity Stuff")]
+    public Image healthBar;
 
 	void Start() {
+        Hp = MaxHP;
 		towerSpawner = GameObject.Find("Tower Spawner");
 		rb = GetComponent<Rigidbody>();
         canAtk = true;
@@ -29,9 +34,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-        if (Hp < 0) {
-            ScoreManager.points += pnts;
-            Destroy(gameObject);
+        if (Hp <= 0) {
+            DataMan.coins += coins;
+            Destroy(transform.parent.gameObject);
         }
 
 		GameObject toAttack = null;
@@ -56,8 +61,13 @@ public class Enemy : MonoBehaviour {
             script.Damage((int)(dmg * dmgMulti));
         }
 
+        Hp += healthAdd;
         speedMulti = 1;
         dmgMulti = 1;
+        healthAdd = 0;
+        if (Hp > MaxHP) Hp = MaxHP;
+
+        healthBar.fillAmount = (float)Hp / (float)MaxHP;
 	}
 
     IEnumerator Attack() {

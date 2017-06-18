@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreDisplay : MonoBehaviour {
+public class ManaDisplay : MonoBehaviour {
 
     Text text;
 
     public Animator anim;
-    int prevPoint;
+    int prevMana;
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +17,10 @@ public class ScoreDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = "Coins: " + ScoreManager.points;
-        if (prevPoint < ScoreManager.points) {
+        text.text = "Mana: " + DataMan.mana;
+        if (prevMana < DataMan.mana) {
             anim.Play("Coin");
         }
-        prevPoint = ScoreManager.points;
+        prevMana = DataMan.mana;
 	}
 }
