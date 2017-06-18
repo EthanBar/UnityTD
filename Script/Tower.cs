@@ -7,6 +7,7 @@ public class Tower : MonoBehaviour {
     public GameObject shot;
     public float range;
     public Level[] levels;
+    public int mana;
 
     GameObject enemySpawner;
     GameObject target;
@@ -60,6 +61,7 @@ public class Tower : MonoBehaviour {
 
 		if (HP < 0) {
 			Destroy(gameObject);
+            DataMan.mana += mana;
             TowerSpawner.grid[(int)transform.position.x + TowerSpawner.width / 2, (int)transform.position.z + TowerSpawner.height / 2] = false;
 		}
     }

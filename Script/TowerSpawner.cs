@@ -40,9 +40,12 @@ public class TowerSpawner : MonoBehaviour {
                 RaycastHit hitInfo;
                 bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
                 if (hit) {
-                    GameObject newSpell = Instantiate(spell.spell);
-                    //newSpell.transform.SetParent(transform);
-                    newSpell.transform.position = new Vector3(hitInfo.point.x, 0.01f, hitInfo.point.z);
+                    if (DataMan.mana >= spell.cost) {
+                        DataMan.mana -= spell.cost;
+                        GameObject newSpell = Instantiate(spell.spell);
+                        //newSpell.transform.SetParent(transform);
+                        newSpell.transform.position = new Vector3(hitInfo.point.x, 0.01f, hitInfo.point.z);
+                    }
                 }
             }
         }
