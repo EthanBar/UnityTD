@@ -28,6 +28,7 @@ public class Tower : MonoBehaviour {
         shotPS = levels[0].shotPS;
         canShoot = true;
         level = 1;
+        meshRender.material.color = levels[0].tint;
         enemySpawner = GameObject.Find("Enemy Spawner");
     }
 

@@ -67,7 +67,8 @@ public class Enemy : MonoBehaviour {
         healthAdd = 0;
         if (Hp > MaxHP) Hp = MaxHP;
 
-        healthBar.fillAmount = (float)Hp / (float)MaxHP;
+        healthBar.fillAmount = (float)Hp / MaxHP;
+        healthBar.color = Color.Lerp(Color.red, Color.green, (float)Hp / MaxHP);
 	}
 
     IEnumerator Attack() {

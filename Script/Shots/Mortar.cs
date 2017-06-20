@@ -4,6 +4,7 @@ public class Mortar : MonoBehaviour {
 
     public float splash;
     public float timeInAir;
+    public GameObject ps;
     Rigidbody rb;
     Shot shot;
     bool first = true;
@@ -17,20 +18,22 @@ public class Mortar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (first) {
+            if (shot.target == null) {
+                Destroy(gameObject);
+                return;
+            }
             rb.velocity = calculateBestThrowSpeed(transform.position, shot.target.transform.position, timeInAir);
             first = false;
         }
         if (transform.position.y <= 0) {
-            print("hit");
             //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             foreach (Transform child in GameObject.Find("Enemy Spawner").transform) {
                 Transform enemy = child.Find("Enemy");
-                print(Vector3.Distance(transform.position, enemy.position));
                 if (Vector3.Distance(transform.position, enemy.position) < splash) {
-                    print(child.name);
                     enemy.gameObject.GetComponent<Enemy>().Damage(shot.dmg);
                 }
             }
+            Instantiate(ps).transform.position = transform.position;
             Destroy(gameObject);
         }
 	}

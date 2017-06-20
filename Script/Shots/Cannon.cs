@@ -13,6 +13,7 @@ public class Cannon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (shot.target == null) Destroy(gameObject); // If target is not found, disappear
         if (shot.target != null) {
             transform.position = Vector3.MoveTowards(transform.position, shot.target.transform.position, shot.speed);
         }

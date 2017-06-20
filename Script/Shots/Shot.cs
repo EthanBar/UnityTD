@@ -17,7 +17,6 @@ public class Shot : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (target == null) Destroy(gameObject); // If target is not found, disappear
     }
 
     // Init shot with data about shot
