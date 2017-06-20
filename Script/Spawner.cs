@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
-
-    public GameObject Enemy;
+    
     bool _canSpawn;
     public float SpawnInter;
 
@@ -15,14 +14,14 @@ public class Spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetKey(KeyCode.Space)) {
 			//Debug.Log("Mouse is down");
 
             RaycastHit hitInfo;
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 			if (hit) {
 //                if (hitInfo.transform.gameObject.name == "Grid Selector") {
-                    GameObject newEnemy = Instantiate(Enemy);
+                GameObject newEnemy = Instantiate(ButtonSpawner.activeEnemy);
                     newEnemy.transform.SetParent(gameObject.transform);
                     Vector3 pos = hitInfo.point;
                     pos.y = 0.25f;

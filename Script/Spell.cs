@@ -9,6 +9,7 @@ public class Spell : MonoBehaviour {
     public float damageInc;
     public int healthAdd;
     public Color color;
+    public int cost;
 
 	// Use this for initialization
 	void Start () {
