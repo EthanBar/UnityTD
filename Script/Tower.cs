@@ -44,7 +44,7 @@ public class Tower : MonoBehaviour {
                 foreach (Transform child in enemySpawner.transform) {
                     if (target == null) {
                         target = child.Find("Enemy").gameObject;
-                    } else if (Vector3.Distance(transform.position, child.position) <
+                    } else if (Vector3.Distance(transform.position, child.Find("Enemy").position) <
                                Vector3.Distance(transform.position, target.transform.position)) {
                         target = child.Find("Enemy").gameObject;
                     }
